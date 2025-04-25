@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="sales_dashboard.OwlSalesDashboard" owl="1">
+        <div class="vh-100 overflow-auto bg-muted">
+            <div class="row m-3">
+                <!-- == Left Column == -->
+                <div class="col-lg-7">
+                    <!-- Header Row -->
+                    <div class="row">
+                        <div class="col m-0 p-0">
+                            <div class="shadow-sm border m-2 p-4 bg-white">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h1 class="text-primary fw-bold">Custom Sales Dashboard</h1>
+                                    <div>
+                                        <select class="form-select" t-model="state.period" t-on-change="onChangePeriod">
+                                            <option value="0">Select Period</option> <!-- Changed to 'Select Period' as 'All Time' might be confusing -->
+                                            <option value="7">Last 7 Days</option>
+                                            <option value="30">Last 30 Days</option>
+                                            <option value="90">Last 90 Days</option>
+                                            <option value="365">Last 365 Days</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- KPI Row -->
+                    <div class="row">
+                        <KpiCard onClick.bind="viewQuotations" name="'Quotations'" value="state.quotations.value" percentage="state.quotations.percentage"/>
+                        <KpiCard onClick.bind="viewOrders" name="'Orders'" value="state.orders.value" percentage="state.orders.percentage"/>
+                        <KpiCard onClick.bind="viewRevenues" name="'Revenues'" value="state.orders.revenue" percentage="state.orders.revenue_percentage"/>
+                        <KpiCard onClick.bind="viewRevenues" name="'Average Order'" value="state.orders.average" percentage="state.orders.average_percentage"/>
+                    </div>
+                    <!-- Chart Row 1 -->
+                    <div class="row">
+                        <!-- Top Products Chart Container -->
+                        <div class="col-lg-6 m-0 p-0">
+                            <!-- Added chart-container class -->
+                            <div class="shadow-sm border m-2 p-4 bg-white chart-container">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <h3 class="text-primary fw-bold mb-0">Top Products</h3>
+                                    <div class="px-3 py-1 bg-primary cursor-pointer" title="View Products Report">
+                                        <span class="fa fa-arrow-right text-white"/>
+                                    </div>
+                                </div>
+                                <ChartRenderer type="'doughnut'" title="'Top Products Report'" chartData="state.topProductsData" />
+                            </div>
+                        </div>
+                        <!-- Top Sales People Chart Container -->
+                        <div class="col-lg-6 m-0 p-0">
+                             <!-- Added chart-container class -->
+                            <div class="shadow-sm border m-2 p-4 bg-white chart-container">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <h3 class="text-primary fw-bold mb-0">Top Sales People</h3>
+                                    <div class="px-3 py-1 bg-primary cursor-pointer" title="View Salesperson Report">
+                                        <span class="fa fa-arrow-right text-white"/>
+                                    </div>
+                                </div>
+                                <ChartRenderer type="'pie'" title="'Top Sales People Report'" chartData="state.topSalesPeopleData" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- == Right Column == -->
+                <div class="col-lg-5">
+                    <!-- Monthly Sales Chart Container -->
+                    <div class="row">
+                        <div class="col m-0 p-0">
+                             <!-- Added chart-container class -->
+                            <div class="shadow-sm border m-2 p-4 bg-white chart-container">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <h3 class="text-primary fw-bold mb-0">Monthly Sales</h3>
+                                    <div class="px-3 py-1 bg-primary cursor-pointer" t-on-click="()=> viewRevenues()" title="View Sales Analysis">
+                                        <span class="fa fa-arrow-right text-white"/>
+                                    </div>
+                                </div>
+                                <ChartRenderer type="'bar'" title="'Monthly Sales Report'" chartData="state.monthlySalesData" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Partner Orders Chart Container -->
+                    <div class="row">
+                        <div class="col m-0 p-0">
+                             <!-- Added chart-container class -->
+                            <div class="shadow-sm border m-2 p-4 bg-white chart-container">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <h3 class="text-primary fw-bold mb-0">Partner Orders</h3> <!-- Changed title to match JS data fetch -->
+                                    <div class="px-3 py-1 bg-primary cursor-pointer" title="View Partner Report">
+                                        <span class="fa fa-arrow-right text-white"/>
+                                    </div>
+                                </div>
+                                <!-- Changed type to 'bar' as data fetched is for top partners, not line chart data -->
+                                <ChartRenderer type="'bar'" title="'Top Partner Revenue'" chartData="state.partnerOrdersData" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

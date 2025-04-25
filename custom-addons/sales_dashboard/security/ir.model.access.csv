@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+# Example: access_sales_dashboard_model,access.sales.dashboard.model,model_sales_dashboard_model,base.group_user,1,0,0,0
+# We don't have custom models yet, so this file can be empty after the header line,
+# but it must exist and be listed in the __manifest__.py 'data' section.
+# Add rules here if you create custom models later.

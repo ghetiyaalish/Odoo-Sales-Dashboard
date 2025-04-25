@@ -1,0 +1,63 @@
+.custom_dashboard {
+    padding: 16px;
+    font-family: Arial, sans-serif;
+
+    .dashboard-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .dashboard-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        padding: 16px;
+        flex: 1 1 200px;
+        min-width: 200px;
+
+        h3 {
+            margin-top: 0;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+    }
+}
+
+/* static/src/css/dashboard.css */
+
+.chart-container {
+    /* Set a fixed height for the chart container */
+    height: 350px; /* Adjust this value as needed */
+
+    /* OR use max-height if you want it to be smaller sometimes */
+    /* max-height: 400px; */
+
+    /* Ensure the container itself doesn't grow indefinitely if flex children resize */
+    flex-shrink: 0;
+
+    /* Prevent content (like a slightly too large canvas) from spilling out */
+    overflow: hidden;
+
+    /* Ensure flex context for the canvas inside if needed (usually not required) */
+    /* display: flex; */
+    /* flex-direction: column; */
+}
+
+/* Optional: Ensure canvas tries to fill the container (Chart.js usually handles this) */
+.chart-container canvas {
+     max-width: 100%;
+     /* Avoid setting explicit height on canvas; let Chart.js manage it */
+     /* max-height: 100%; */ /* Usually not needed with maintainAspectRatio:false */
+}
+
+/* Add other styles if needed */
+.bg-muted { /* Ensure your main background has necessary layout props */
+     background-color: #f8f9fa; /* Example color */
+}
