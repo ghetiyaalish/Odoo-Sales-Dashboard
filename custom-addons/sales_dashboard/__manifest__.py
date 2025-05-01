@@ -16,6 +16,7 @@
         # 'security/ir.model.access.csv',
         # 'views/dashboard.xml',
         'views/templates.xml',
+        'views/report_invoice_custom.xml'
     ],
     'assets': {
         'web.assets_backend': [

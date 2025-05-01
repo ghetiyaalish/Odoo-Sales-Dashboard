@@ -56,8 +56,7 @@ export class ChartRenderer extends Component {
 
         const ctx = canvasElement.getContext('2d');
 
-        const chartData = { /* ... (Keep data preparation as before) ... */
-            labels: this.props.chartData.labels,
+        const chartData = {labels: this.props.chartData.labels,
             datasets: [{
                 label: this.props.chartData.label || 'Dataset',
                 data: this.props.chartData.values,

@@ -13,7 +13,8 @@
                                     <h1 class="text-primary fw-bold">Custom Sales Dashboard</h1>
                                     <div>
                                         <select class="form-select" t-model="state.period" t-on-change="onChangePeriod">
-                                            <option value="0">Select Period</option> <!-- Changed to 'Select Period' as 'All Time' might be confusing -->
+                                            <option value="0">Select Period</option> 
+                                            <option value="1">Last 1 Days</option>
                                             <option value="7">Last 7 Days</option>
                                             <option value="30">Last 30 Days</option>
                                             <option value="90">Last 90 Days</option>

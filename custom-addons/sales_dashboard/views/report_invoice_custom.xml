@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_invoice_document_custom" inherit_id="account.report_invoice_document">
+
+            <!-- 1. Modify the main title style -->
+            <!-- Enhancing color and border using the palette -->
+            <xpath expr="//div[@class='page mb-4']/h2" position="replace">
+                <h2 style="color: #3498db; text-align: center; border-bottom: 2px solid #2980b9; padding-bottom: 10px; margin-bottom: 20px; font-size: 1.8em;">
+                    <t t-field="o.name"/>
+                </h2>
+            </xpath>
+
+            <!-- 2. Add thank you message after the totals section -->
+            <!-- Enhancing color and style -->
+            <xpath expr="//div[@id='total']" position="after">
+                <p style="margin-top: 30px; text-align: center; font-style: italic; color: #555; font-size: 1.1em;">
+                    Thank you for your business! We appreciate your trust in our services.
+                </p>
+            </xpath>
+
+            <!-- 3. Style the table headers - Removing inline style via XPath, will use CSS -->
+            <xpath expr="//table[@class='table table-sm o_main_table table-borderless']/thead/tr" position="attributes">
+                <attribute name="style"/> <!-- Remove any existing inline style attribute -->
+            </xpath>
+
+            <!-- 4. Add custom CSS before external layout -->
+            <xpath expr="//t[@t-call='web.external_layout']" position="before">
+                <style>
+                    /* General body text color */
+                    body {
+                        color: #555;
+                    }
+
+                    /* --- Style the Header Row Containing Addresses and Logo --- */
+                    /* Target the first direct child div of the page div (which is usually the row) */
+                    /* NOTE: This targets the whole row. If you only want background on COMPANY address, */
+                    /* use the more specific CSS from the previous example targeting the column. */
+                    /* Targeting the row simplifies layout but styles both sides if they are in the same row. */
+                    .page.mb-4 > div.row {
+                        background-color: #f8f9fa; /* Light background color */
+                        padding: 20px; /* Add padding around the content */
+                        margin-bottom: 30px; /* Space below the header block */
+                        border: 1px solid #dee2e6; /* Subtle border */
+                        border-radius: 8px; /* Rounded corners */
+                    }
+
+                     /* Optional: Style the address text within the header block */
+                    .page.mb-4 > div.row address {
+                         color: #333; /* Make address text slightly darker */
+                         font-size: 1em;
+                         line-height: 1.5;
+                    }
+
+                     /* Optional: Style the company logo image within this block */
+                    .page.mb-4 > div.row img {
+                         max-height: 60px; /* Limit logo height */
+                         object-fit: contain;
+                         margin-bottom: 10px; /* Space below logo */
+                    }
+
+
+                    /* Style the invoice table */
+                    .table.o_main_table { /* More specific target */
+                        width: 100%;
+                        margin-bottom: 20px;
+                        border-collapse: collapse; /* Ensure borders are neat */
+                    }
+                    .table.o_main_table th {
+                        background-color: #3498db !important; /* Primary color background for headers */
+                        color: white !important; /* White text for contrast */
+                        padding: 12px 10px; /* More padding */
+                        text-align: left;
+                        border-bottom: 2px solid #2980b9; /* Darker blue border below header */
+                         border-top: 1px solid #2980b9; /* Add a top border to headers */
+                    }
+                     /* Add rounded corners to top header cells */
+                     .table.o_main_table thead th:first-child { border-top-left-radius: 5px; border-left: 1px solid #2980b9; }
+                     .table.o_main_table thead th:last-child { border-top-right-radius: 5px; border-right: 1px solid #2980b9; }
+
+
+                    .table.o_main_table td {
+                        padding: 8px 10px; /* Consistent padding */
+                        vertical-align: top;
+                        border-bottom: 1px solid #dee2e6; /* Light gray border between rows */
+                        border-left: 1px solid #dee2e6; /* Add side borders */
+                        border-right: 1px solid #dee2e6; /* Add side borders */
+                    }
+
+                     /* Zebra striping for table body */
+                    .table.o_main_table tbody tr:nth-child(even) {
+                        background-color: #f2f2f2; /* A slightly darker light gray for even rows */
+                    }
+                     /* Add slightly thicker bottom border to the last row */
+                    .table.o_main_table tbody tr:last-child td {
+                         border-bottom: 2px solid #dee2e6;
+                    }
+                    /* Add rounded corners to bottom cells of the last row */
+                    .table.o_main_table tbody tr:last-child td:first-child { border-bottom-left-radius: 5px; }
+                    .table.o_main_table tbody tr:last-child td:last-child { border-bottom-right-radius: 5px; }
+
+
+                    /* Remove default table-borderless borders if any remain */
+                    .table-borderless th,
+                    .table-borderless td {
+                        border: none !important; /* Ensure no unwanted borders from the original class */
+                    }
+
+
+                    /* Style totals section */
+                    #total {
+                        margin-top: 30px; /* More space above totals */
+                        padding-top: 15px; /* More padding inside totals */
+                        border-top: 3px solid #2980b9; /* Thicker, darker blue border */
+                        background-color: #f8f9fa; /* Light background to the totals block */
+                        padding: 15px;
+                        border-radius: 5px;
+                         float: right; /* Float the totals block to the right */
+                        width: 50%; /* Give it a specific width, adjust as needed */
+                        box-sizing: border-box; /* Include padding in the width */
+                    }
+                    /* Clear the float after the totals section */
+                    .page.mb-4::after {
+                        content: "";
+                        display: table;
+                        clear: both;
+                    }
+
+                    /* Style the individual total lines within the totals block */
+                    #total .row {
+                        margin-bottom: 5px; /* Space between total lines */
+                    }
+                     #total .row > div {
+                         padding: 5px 15px;
+                     }
+                     #total strong {
+                         color: #333; /* Ensure total labels are clear */
+                     }
+
+
+                    /* Style HSN Summary title (assuming it's still h2.mt0) */
+                     h2.mt0 {
+                         color: #3498db; /* Match primary color */
+                         margin-top: 30px; /* Add space above HSN summary */
+                         border-bottom: 2px solid #dee2e6; /* Subtle border below */
+                         padding-bottom: 5px;
+                     }
+
+
+                    /* Style footer note (the "electronically generated document") */
+                    /* Using the existing inline style selector for simplicity, but added a class in prev example is better */
+                    .page div[style*="text-align: center; margin-top: 30px;"] { /* Targets the div based on part of its inline style */
+                        text-align: center;
+                        margin-top: 40px !important; /* Increased margin */
+                        padding-top: 15px !important;
+                        border-top: 1px solid #dee2e6 !important;
+                        color: #888 !important;
+                        font-size: 0.9em !important;
+                    }
+
+
+                </style>
+            </xpath>
+
+            <!-- 5. Add a footer note -->
+            <!-- Keeping this XPath to add the div for the footer note -->
+            <xpath expr="//div[@id='payment_term']" position="after">
+                <div style="text-align: center; margin-top: 30px; padding-top: 10px; border-top: 1px solid #eee; color: #999; font-size: 0.9em;">
+                     This is an electronically generated document. No signature is required.
+                </div>
+            </xpath>
+
+            <!-- NOTE: The 'Thank you' message is added via position="after" total, not here -->
+
+
+        </template>
+    </data>
+</odoo>
